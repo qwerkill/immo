@@ -15,6 +15,6 @@ export class UploadFileEntity extends CommonEntity {
     @ManyToOne(() => ServiceEntity, service => service.uploadFile)
     services: ServiceEntity;
 
-    @ManyToOne(() => AdvertEntity, advert => advert.uploadFile)
-    adverts: AdvertEntity;
+    // @ManyToOne(() => AdvertEntity, advert => advert.uploadFile)
+    // adverts: AdvertEntity;
 }

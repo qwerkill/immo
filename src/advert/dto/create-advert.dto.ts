@@ -1,7 +1,11 @@
 import { UserEntity } from "src/user/entities/user.entity";
 
 export class CreateAdvertDto {
-    address: string;
     title: string;
-    user:UserEntity;
+    price: number 
+    nb_rooms: number
+    square_meters: number
+    description: string
+    phoneNumber: string
+    user: UserEntity;
 }

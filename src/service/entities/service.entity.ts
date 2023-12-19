@@ -15,6 +15,6 @@ export class ServiceEntity  extends CommonEntity{
     @OneToMany(()=> UploadFileEntity, uploadFile => uploadFile.services)
     uploadFile: UploadFileEntity[];
 
-    @ManyToMany(()=> AdvertEntity, advert => advert.services)
-    adverts: AdvertEntity[];
+    // @ManyToMany(()=> AdvertEntity, advert => advert.services)
+    // adverts: AdvertEntity[];
 }

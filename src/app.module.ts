@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdvertModule } from './advert/advert.module';
 import { ServiceModule } from './service/service.module';
 import { UploadFileModule } from './upload-file/upload-file.module';
+import { DatabaseConfigModule } from './database-config/database-config.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UploadFileModule } from './upload-file/upload-file.module';
     AdvertModule,
     ServiceModule,
     UploadFileModule,
+    DatabaseConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],

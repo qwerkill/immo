@@ -12,7 +12,13 @@ export class UserEntity extends CommonEntity{
 
     @Column()
     password: string;
+
+    @Column()
+    name: string;
     
     @OneToMany(() => AdvertEntity, advert => advert.user)
     adverts: AdvertEntity[];
+
+    @Column()
+    created_at: Date;
 }

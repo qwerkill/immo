@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { QueriesUserDTO } from './dto/queries-user.dto';
 
 @Injectable()
 export class UserService {
@@ -22,13 +23,43 @@ export class UserService {
 
   }
 
-  async findAll() {
-    const query = await this.userRepository.createQueryBuilder("user")
-    .leftJoinAndSelect("user.adverts", "adverts");
+  async findAll(queries: QueriesUserDTO) {
 
-    const usersList =  query.getMany();
+    const {
+      name,
+      per_page = 10,
+      page = 1,
+      order = 'ASC' ,
+      order_by = 'name',
+      created_at,
+    } = queries;
 
-    return usersList;
+
+    
+    try {
+      const query = await this.userRepository
+        .createQueryBuilder('user')
+        if(name){
+          query.andWhere('user.name = :name', {name})
+        }
+        if(created_at){
+          query.andWhere('user.created_at = :created_at', {created_at})
+        }
+        query.orderBy(`user.${order_by}`, order);
+        query.skip((page - 1) * per_page);
+        query.take(per_page);
+
+        const [data, count] = await query.getManyAndCount();
+
+        return {
+          data,
+          count,
+          page,
+          per_page,
+        };
+    } catch (error) {
+      throw  new Error(error)
+    }
   }
 
   async findOne(id: number) {
@@ -44,8 +75,7 @@ export class UserService {
     const user = await this.findOne(id);
 
     try{
-      const updatedUser = await this.userRepository.update(user,updateUserDto);
-      return updatedUser;      
+      return await this.userRepository.update(user,updateUserDto);
     } catch (error) {
       throw  new Error(error)
     }

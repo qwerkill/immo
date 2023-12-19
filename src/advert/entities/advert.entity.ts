@@ -1,29 +1,33 @@
-import { CommonEntity } from 'src/common/common.entity';
-import { ServiceEntity } from 'src/service/entities/service.entity';
-import { UploadFileEntity } from 'src/upload-file/entities/upload-file.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { Entity,PrimaryColumn, Column, ManyToOne, OneToMany, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-
+import { CommonEntity } from "src/common/common.entity";
+import { UserEntity } from "src/user/entities/user.entity";
+import { Column, Entity, ManyToOne,  PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('advert')
 export class AdvertEntity extends CommonEntity {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
 
     @Column()
-    address:string;
+    title: string;
+
+    @Column({
+        type: 'float',
+        default: 0,
+    })
+    price: number;
 
     @Column()
-    title:string;
+    nb_rooms: number;
 
+    @Column()
+    square_meters: number;
 
-    @ManyToOne(() => UserEntity, user => user.adverts, {nullable:true})
+    @Column()
+    description: string;
+
+    @Column()
+    phoneNumber: string
+
+    @ManyToOne(() => UserEntity, (user) => user.adverts, { nullable: true})
     user: UserEntity;
-
-    @ManyToMany(()=> ServiceEntity, service => service.adverts)
-    services: ServiceEntity[];
-
-    @OneToMany(()=> UploadFileEntity, uploadFile => uploadFile.adverts)
-    uploadFile: UploadFileEntity[];
-
 }

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
 import { AdvertService } from './advert.service';
 import { CreateAdvertDto } from './dto/create-advert.dto';
 import { UpdateAdvertDto } from './dto/update-advert.dto';
+import { QueriesAdvertsDTO } from './dto/queries-adverts.dto';
 
 @Controller('adverts')
 export class AdvertController {
@@ -13,8 +14,10 @@ export class AdvertController {
   }
 
   @Get()
-  findAll() {
-    return this.advertService.findAll();
+  findAll(
+    @Query() queries: QueriesAdvertsDTO
+  ) {
+    return this.advertService.findAll(queries);
   }
 
   @Get(':id')
